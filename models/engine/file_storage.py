@@ -75,7 +75,7 @@ class FileStorage:
         obj_del = f"{obj.__class__.__name__}.{obj.id}"
         try:
             del FileStorage.__objects[obj_del]
-        except AttribulteError:
+        except AttributeError:
             pass
         except KeyboardInterrupt:
             pass
