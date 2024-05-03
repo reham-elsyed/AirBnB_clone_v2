@@ -9,17 +9,19 @@ if the archive has been correctly generated
 
 Otherwise, it should return None
 """
-from fabric.api import *
-import time
-from datetime import date
+from datetime import datetime
+from fabric.api import local
+from os.path import isdir
 
 
 def do_pack():
-    timestamp = time.strftime("%Y%m%d%H%M%S")
+    """generates a tgz archive"""
     try:
-        local("mkdir -p versions")
-        local("tar -cvzf versions/web_static_{:s}.tgz web_static/".
-              format(timestamp))
-        return ("versions/web_static_{:s}.tgz".format(timestamp))
+        date = datetime.now().strftime("%Y%m%d%H%M%S")
+        if isdir("versions") is False:
+            local("mkdir versions")
+        file_name = "versions/web_static_{}.tgz".format(date)
+        local("tar -cvzf {} web_static".format(file_name))
+        return file_name
     except:
         return None
