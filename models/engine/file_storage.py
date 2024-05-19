@@ -62,7 +62,7 @@ class FileStorage:
             with open(fname, mode='r', encoding='utf-8') as f_io:
                 new_objs = json.load(f_io)
         except:
-            return
+            pass
         for o_id, d in new_objs.items():
             k_cls = d['__class__']
             FileStorage.__objects[o_id] = FileStorage.CNC[k_cls](**d)
